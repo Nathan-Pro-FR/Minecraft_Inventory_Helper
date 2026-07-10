@@ -19,23 +19,41 @@
     <main class="container">
         <section id="optimizer" class="tab-content active">
             <h2>Optimise ton Inventaire</h2>
-            <p>Sélectionne tes items pour voir comment économiser des slots.</p>
+            <p>Remplis ton inventaire pour calculer l'espace débloqué après craft.</p>
             
             <div class="grid-layout">
                 <div class="mc-panel">
-                    <h3>Ton inventaire actuel</h3>
-                    <div class="inventory-grid">
-                        <div class="inventory-slot" title="Exemple : Diamant"><span class="count">64</span></div>
-                        <div class="inventory-slot"></div>
-                        <div class="inventory-slot"></div>
-                        <div class="inventory-slot"></div>
-                    </div>
+                    <h3>Ton Inventaire (36 slots)</h3>
+                    
+                    <div class="inventory-main-grid" id="main-inventory">
+                        </div>
+                    
+                    <div class="inventory-separator"></div>
+                    
+                    <div class="inventory-hotbar-grid" id="hotbar-inventory">
+                        </div>
                 </div>
 
-                <div class="mc-panel">
-                    <h3>Conseils d'optimisation</h3>
-                    <div class="results-box">
-                        <p class="placeholder-text">Ajoute des items pour voir les conseils...</p>
+                <div class="sidebar-layout">
+                    <div class="mc-panel">
+                        <h3>Ajouter un item au slot sélectionné</h3>
+                        <div class="add-item-box">
+                            <select id="item-selector">
+                                <option value="iron_ingot">Lingot de Fer</option>
+                                <option value="raw_iron">Fer Brut</option>
+                                <option value="redstone">Poudre de Redstone</option>
+                                <option value="diamond">Diamant</option>
+                            </select>
+                            <input type="number" id="item-count" value="64" min="1" max="64">
+                            <button class="mc-btn" onclick="addItemToInventory()">Déposer</button>
+                        </div>
+                    </div>
+
+                    <div class="mc-panel">
+                        <h3>Conseils d'optimisation</h3>
+                        <div class="results-box" id="optimization-results">
+                            <p class="placeholder-text">Ton inventaire est vide. Ajoute des items pour voir les gains de place !</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,35 +62,34 @@
         <section id="craft-guide" class="tab-content">
             <h2>Guide des Crafts</h2>
             <div class="search-bar-container">
-                <input type="text" id="search-bar" placeholder="Rechercher un item à crafter...">
+                <input type="text" id="search-bar" placeholder="Rechercher un item (ex: Bloc de Fer)...">
             </div>
             
             <div class="mc-panel">
-                <div class="crafts-grid">
-                    <div class="item-card">
-                        <div class="inventory-slot"></div>
-                        <span>Bloc de Fer</span>
+                <div class="crafts-grid" id="crafts-container">
                     </div>
-                    <div class="item-card">
-                        <div class="inventory-slot"></div>
-                        <span>Coffre</span>
-                    </div>
-                </div>
             </div>
         </section>
     </main>
 
     <script>
-        // Un petit script rapide pour tester le changement d'onglets avant de faire le gros JS
+        // Changement d'onglets
         function switchTab(tabId) {
-            // Masquer toutes les sections
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            // Enlever le style "actif" des boutons
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            
-            // Afficher la section demandée et activer le bon bouton
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
+        }
+
+        // Script temporaire pour dessiner visuellement les 36 slots au chargement
+        const mainInv = document.getElementById('main-inventory');
+        for (let i = 0; i < 27; i++) {
+            mainInv.innerHTML += `<div class="inventory-slot" data-slot="${i}"></div>`;
+        }
+        
+        const hotbarInv = document.getElementById('hotbar-inventory');
+        for (let i = 27; i < 36; i++) {
+            hotbarInv.innerHTML += `<div class="inventory-slot" data-slot="${i}"></div>`;
         }
     </script>
 </body>
