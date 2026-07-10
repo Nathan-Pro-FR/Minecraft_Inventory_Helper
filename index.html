@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Inventory Helper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Minecraft Inventory Helper</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('optimizer')">Optimiseur d'Espace</button>
+            <button class="nav-btn" onclick="switchTab('craft-guide')">Guide de Craft</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="optimizer" class="tab-content active">
+            <h2>Optimise ton Inventaire</h2>
+            <p>Sélectionne tes items pour voir comment économiser des slots.</p>
+            
+            <div class="grid-layout">
+                <div class="mc-panel">
+                    <h3>Ton inventaire actuel</h3>
+                    <div class="inventory-grid">
+                        <div class="inventory-slot" title="Exemple : Diamant"><span class="count">64</span></div>
+                        <div class="inventory-slot"></div>
+                        <div class="inventory-slot"></div>
+                        <div class="inventory-slot"></div>
+                    </div>
+                </div>
+
+                <div class="mc-panel">
+                    <h3>Conseils d'optimisation</h3>
+                    <div class="results-box">
+                        <p class="placeholder-text">Ajoute des items pour voir les conseils...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="craft-guide" class="tab-content">
+            <h2>Guide des Crafts</h2>
+            <div class="search-bar-container">
+                <input type="text" id="search-bar" placeholder="Rechercher un item à crafter...">
+            </div>
+            
+            <div class="mc-panel">
+                <div class="crafts-grid">
+                    <div class="item-card">
+                        <div class="inventory-slot"></div>
+                        <span>Bloc de Fer</span>
+                    </div>
+                    <div class="item-card">
+                        <div class="inventory-slot"></div>
+                        <span>Coffre</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Un petit script rapide pour tester le changement d'onglets avant de faire le gros JS
+        function switchTab(tabId) {
+            // Masquer toutes les sections
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // Enlever le style "actif" des boutons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Afficher la section demandée et activer le bon bouton
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
