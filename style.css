@@ -1,4 +1,4 @@
-/* ---- Configuration globale (Inchangée) ---- */
+/* ---- Reset & Variables Globales ---- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -21,7 +21,7 @@ header {
 
 h1 {
     color: #f7a800;
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 15px;
     text-shadow: 2px 2px #3f2a00;
 }
@@ -32,7 +32,7 @@ h1 {
     padding: 0 20px;
 }
 
-/* ---- Onglets ---- */
+/* ---- Barre de Navigation ---- */
 nav {
     display: flex;
     justify-content: center;
@@ -47,25 +47,50 @@ nav {
     padding: 10px 20px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.nav-btn:hover {
+    background-color: #5c5c5c;
 }
 
 .nav-btn.active {
-    background-color: #70a1ff;
-    border-color: #a4c4ff #2f5496 #2f5496 #a4c4ff;
+    background-color: #4cd137; /* Vert Minecraft pour l'onglet actif */
+    color: #fff;
+    border-color: #7bed9f #1b8a13 #1b8a13 #7bed9f;
+    text-shadow: 1px 1px #000;
 }
 
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* ---- Switcher d'onglets ---- */
+.tab-content {
+    display: none;
+}
 
-/* ---- Layout en deux colonnes ---- */
+.tab-content.active {
+    display: block;
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+p {
+    margin-bottom: 20px;
+    color: #aaaaaa;
+}
+
+/* ---- Layout Global Réactif ---- */
 .grid-layout {
     display: grid;
-    grid-template-columns: 540px 1fr; /* Largeur fixe pour l'inventaire pour qu'il reste carré */
+    grid-template-columns: 520px 1fr;
     gap: 20px;
 }
 
-@media (max-width: 900px) {
-    .grid-layout { grid-template-columns: 1fr; }
+@media (max-width: 1000px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
 .sidebar-layout {
@@ -74,7 +99,7 @@ nav {
     gap: 20px;
 }
 
-/* ---- Panels Style Minecraft ---- */
+/* ---- Panneaux Style Interface Minecraft ---- */
 .mc-panel {
     background-color: #c6c6c6;
     color: #373737;
@@ -86,13 +111,15 @@ nav {
 .mc-panel h3 {
     margin-bottom: 15px;
     font-size: 1.1rem;
-    text-shadow: 1px 1px #eee;
+    font-weight: bold;
+    border-bottom: 2px solid #a1a1a1;
+    padding-bottom: 4px;
 }
 
-/* ---- STRUCTURE DE L'INVENTAIRE ---- */
+/* ---- Structure de la Grille d'Inventaire ---- */
 .inventory-main-grid, .inventory-hotbar-grid {
     display: grid;
-    grid-template-columns: repeat(9, 50px); /* 9 colonnes */
+    grid-template-columns: repeat(9, 50px);
     gap: 4px;
     justify-content: center;
 }
@@ -101,10 +128,11 @@ nav {
     height: 4px;
     background-color: #555555;
     border-bottom: 4px solid #ffffff;
-    margin: 15px 0;
+    margin: 15px auto;
+    width: 482px;
 }
 
-/* Les Slots */
+/* Les Slots Individuels */
 .inventory-slot {
     width: 50px;
     height: 50px;
@@ -116,19 +144,29 @@ nav {
     justify-content: center;
     position: relative;
     cursor: pointer;
+    user-select: none;
 }
 
 .inventory-slot:hover {
     background-color: #9c9c9c;
 }
 
-/* Image de l'item à l'intérieur du slot */
+/* Slot sélectionné par le joueur */
+.inventory-slot.selected {
+    background-color: #b0b0b0;
+    border-color: #ffffff #373737 #373737 #ffffff; /* Relief inversé "enfoncé" */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+/* Rendu Pixel Parfait des Images Bedrock */
 .inventory-slot img {
     width: 32px;
     height: 32px;
-    image-rendering: pixelated; /* Pour garder l'effet pixel des icônes MC */
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
+/* Nombre d'items empilés */
 .inventory-slot .count {
     position: absolute;
     bottom: 2px;
@@ -139,42 +177,122 @@ nav {
     text-shadow: 2px 2px #000000;
 }
 
-/* ---- Formulaires & Boutons ---- */
+/* ---- Formulaire d'Ajout d'Items ---- */
 .add-item-box {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .add-item-box select, .add-item-box input {
-    padding: 8px;
-    border: 2px solid #555555;
-    background: #fff;
+    padding: 10px;
+    border: 3px solid #555555;
+    background-color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.count-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.count-input-wrapper input {
+    width: 80px;
 }
 
 .mc-btn {
     background-color: #4a4a4a;
     color: #fff;
-    border: 2px solid;
+    border: 3px solid;
     border-color: #7a7a7a #262626 #262626 #7a7a7a;
-    padding: 8px 15px;
+    padding: 10px;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.mc-btn:hover {
+    background-color: #5c5c5c;
+}
+
+/* ---- Section d'Analyse / Conseils ---- */
+.placeholder-text {
+    color: #555555;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.summary-box {
+    background-color: #373737;
+    color: #fff;
+    padding: 12px;
+    margin-bottom: 15px;
+    text-align: center;
+    border: 3px solid #1a1a1a;
+}
+
+.highlight-count {
+    color: #55ff55;
+    text-shadow: 1px 1px #005500;
+}
+
+.advice-list {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.advice-card {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #1c1c1c;
+}
+
+.green-text {
+    color: #007f00;
     font-weight: bold;
 }
 
-.mc-btn:hover { background-color: #5c5c5c; }
+.advice-divider {
+    border: 0;
+    height: 2px;
+    background: #a1a1a1;
+    margin: 12px 0;
+}
 
-/* ---- Guide de Craft ---- */
+/* ---- Section Guide des Crafts ---- */
 .search-bar-container input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background-color: #1d1d1d;
-    border: 3px solid #4a4a4a;
+    border: 4px solid #4a4a4a;
     color: #fff;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
 }
 
 .crafts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 15px;
+}
+
+.item-card {
+    background-color: #b5b5b5;
+    border: 3px solid #555555;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.item-card span {
+    color: #222;
 }
