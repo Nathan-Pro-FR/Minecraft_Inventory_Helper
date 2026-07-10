@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Inventory Helper</title>
     <link rel="stylesheet" href="style.css">
+    <script src="items.js"></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
 
@@ -19,40 +21,37 @@
     <main class="container">
         <section id="optimizer" class="tab-content active">
             <h2>Optimise ton Inventaire</h2>
-            <p>Remplis ton inventaire pour calculer l'espace débloqué après craft.</p>
+            <p>Sélectionne une case, choisis un item et ajoute-le pour simuler ton inventaire et calculer l'espace gagné.</p>
             
             <div class="grid-layout">
                 <div class="mc-panel">
                     <h3>Ton Inventaire (36 slots)</h3>
                     
-                    <div class="inventory-main-grid" id="main-inventory">
-                        </div>
+                    <div class="inventory-main-grid" id="main-inventory"></div>
                     
                     <div class="inventory-separator"></div>
                     
-                    <div class="inventory-hotbar-grid" id="hotbar-inventory">
-                        </div>
+                    <div class="inventory-hotbar-grid" id="hotbar-inventory"></div>
                 </div>
 
                 <div class="sidebar-layout">
                     <div class="mc-panel">
-                        <h3>Ajouter un item au slot sélectionné</h3>
+                        <h3>Ajouter un item</h3>
                         <div class="add-item-box">
                             <select id="item-selector">
-                                <option value="iron_ingot">Lingot de Fer</option>
-                                <option value="raw_iron">Fer Brut</option>
-                                <option value="redstone">Poudre de Redstone</option>
-                                <option value="diamond">Diamant</option>
-                            </select>
-                            <input type="number" id="item-count" value="64" min="1" max="64">
-                            <button class="mc-btn" onclick="addItemToInventory()">Déposer</button>
+                                </select>
+                            <div class="count-input-wrapper">
+                                <label for="item-count">Quantité :</label>
+                                <input type="number" id="item-count" value="64" min="1" max="64">
+                            </div>
+                            <button class="mc-btn" onclick="addItemToInventory()">Déposer dans le slot</button>
                         </div>
                     </div>
 
                     <div class="mc-panel">
                         <h3>Conseils d'optimisation</h3>
                         <div class="results-box" id="optimization-results">
-                            <p class="placeholder-text">Ton inventaire est vide. Ajoute des items pour voir les gains de place !</p>
+                            <p class="placeholder-text">Ton inventaire est vide. Sélectionne une case et dépose des ressources pour voir l'analyse.</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
         <section id="craft-guide" class="tab-content">
             <h2>Guide des Crafts</h2>
             <div class="search-bar-container">
-                <input type="text" id="search-bar" placeholder="Rechercher un item (ex: Bloc de Fer)...">
+                <input type="text" id="search-bar" placeholder="Rechercher un bloc ou un item (ex: Fer, Diamant)...">
             </div>
             
             <div class="mc-panel">
@@ -73,23 +72,13 @@
     </main>
 
     <script>
-        // Changement d'onglets
+        // Changement d'onglets (Laissé ici pour assurer une transition HTML rapide)
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
-        }
-
-        // Script temporaire pour dessiner visuellement les 36 slots au chargement
-        const mainInv = document.getElementById('main-inventory');
-        for (let i = 0; i < 27; i++) {
-            mainInv.innerHTML += `<div class="inventory-slot" data-slot="${i}"></div>`;
-        }
-        
-        const hotbarInv = document.getElementById('hotbar-inventory');
-        for (let i = 27; i < 36; i++) {
-            hotbarInv.innerHTML += `<div class="inventory-slot" data-slot="${i}"></div>`;
         }
     </script>
 </body>
